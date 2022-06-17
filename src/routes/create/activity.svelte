@@ -1,0 +1,16 @@
+<script>
+
+</script>
+<div class="page grid grid-cols-12 pt-[5vh]">
+    <h1 class=" col-span-12 text-center">New Event  </h1>
+    <input type="text" placeholder="Title" class="input input-primary col-span-12 m-2 rounded-none">
+    <input type="text" placeholder="location" class="input input-primary col-span-12 m-2 rounded-none">
+     
+    
+    <textarea placeholder="Describtion" name="" id=""  cols="30" rows="5" class=" textarea textarea-primary col-span-12 m-2 rounded-none"></textarea>
+    <input type="datetime-local"  class="col-span-12 text-center p-2 border-2 border-primary m-2" name="" id="">
+    <button class="btn  btn-primary col-span-12  m-2 rounded-none ">Submit</button>
+    
+     
+
+</div>
