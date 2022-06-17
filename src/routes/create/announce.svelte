@@ -1,11 +1,20 @@
 <script>
+	import { db } from '$lib/firebase/config';
+	import { addDoc, collection } from 'firebase/firestore';
 	let announcementTitle = '';
 	let announcementDescribion = '';
 
-	function submitAnouncement() {
+	async function submitAnouncement() {
+		await addDoc(collection(db, 'announcements'), {
+			title: announcementTitle.toUpperCase(),
+			describtion: announcementDescribion
+		}).then(()=>{
+             alert(
+                "Submitted sucessfully "
+             )
 
-        
-    }
+        })
+	}
 </script>
 
 <div class="page grid grid-cols-12 pt-[5vh]">
