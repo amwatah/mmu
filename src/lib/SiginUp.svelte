@@ -1,53 +1,73 @@
 <script lang="ts">
 	import { db } from './firebase/config.js';
-	import { addDoc, collection } from 'firebase/firestore';
-import { goto } from '$app/navigation';
-  
-    export let hasAccount : Function
+	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+	import { courses } from './stores/globals.js';
+
+	export let hasAccount: Function;
 	let isStudent = true;
 	let studentName = '';
 	let studentYear = '';
 	let studentPassword = '';
+	let studentPass2 =""
 	let studentRegno = '';
+	let studentCourse = '';
 	let tutorName = '';
 	let tutorFaculty = '';
 	let turorPassword = '';
+	let tutorPass2 =""
 
+	function checkPass (){
+		 if ( ( studentPassword != studentPass2  ) || (turorPassword!= turorPassword) ){
+			return "passwords do not match"
+		 }
+	}
 	async function studentSignup() {
-		await addDoc(collection(db, 'users'), {
+		if (  checkPass() != "passwords do not match") {
+			await addDoc(collection(db, 'users'), {
 			user: 'student',
 			name: studentName.toUpperCase(),
 			year: studentYear.toUpperCase(),
 			password: studentPassword,
-			registrationNo: studentRegno.toUpperCase()
+			registrationNo: studentRegno.toUpperCase(),
+			course: studentCourse.toUpperCase(),
+			created: serverTimestamp(),
+			verified: false
 		})
 			.then(() => {
 				alert('signed up ! Welcome to Multimedia');
-               
 			})
 			.catch((e) => {
 				alert('error:' + e);
 			});
+			
+		} else {
+			alert("Error passwords do not match! ") 
+		}
+
 	}
 	async function tutorSignup() {
-		await addDoc(collection(db, 'users'), {
+		if ( checkPass() != "passwords do not match"  ) {
+			await addDoc(collection(db, 'users'), {
 			user: 'tutor',
-			name:  tutorName.toUpperCase(),
+			name: tutorName.toUpperCase(),
 			faculty: tutorFaculty.toUpperCase(),
-			password: turorPassword,
-			
+			password: turorPassword
 		})
 			.then(() => {
 				alert('signed up ! Welcome to Multimedia');
-              
 			})
 			.catch((e) => {
 				alert('error:' + e);
 			});
+			
+		} else {
+			 alert("Password do not match")
+		}
+	
 	}
 </script>
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center ">
 	<div class="switch flex gap-2">
 		<p class="">STUDENT</p>
 		<input on:change={() => (isStudent = !isStudent)} type="checkbox" class="toggle" />
@@ -55,7 +75,7 @@ import { goto } from '$app/navigation';
 	</div>
 	<div class="form">
 		{#if isStudent}
-			<div class="student-form">
+			<div class="student-form  ">
 				<input
 					bind:value={studentName}
 					type="text"
@@ -75,7 +95,9 @@ import { goto } from '$app/navigation';
 					class="input input-primary mt-1 "
 					placeholder="password"
 				/>
-				<input type="text" class="input input-primary mt-1 " placeholder="confirm password" />
+				<input bind:value={ studentPass2} type="text" class="input input-primary mt-1 " placeholder="confirm password" />
+				 
+				  
 
 				<br />
 				<input
@@ -85,6 +107,18 @@ import { goto } from '$app/navigation';
 					placeholder="registration Number "
 				/>
 				<br />
+				<section class="course  mx-auto flex flex-col justify-center">
+					<p>PICK YOUR COURSE</p>
+					<select
+						name="courses"
+						bind:value={studentCourse}
+						class=" p-3 rounded-md m-1 text-center max-w-[80vw] mx-auto border-2 border-primary flex flex-col items-center gap-1  cursor-pointer"
+					>
+						{#each $courses as course}
+							<option value={course} class=" w-full  border-2"> {course}</option>
+						{/each}
+					</select>
+				</section>
 				<button on:click={studentSignup} class="btn btn-primary w-full mt-2">REGISTER</button>
 			</div>
 		{:else}
@@ -113,7 +147,9 @@ import { goto } from '$app/navigation';
 				<button on:click={tutorSignup} class="btn btn-primary w-full mt-2">REGISTER</button>
 			</div>
 		{/if}
-        <button on:click={ ()=> hasAccount() } class="btn btn-outline btn-primary btn-sm mt-1">login</button>
+		<button on:click={() => hasAccount()} class="btn btn-outline btn-primary btn-sm mt-1"
+			>login</button
+		>
 	</div>
 
 	<br />
