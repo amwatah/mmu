@@ -1,69 +1,69 @@
 <script lang="ts">
 	import { db } from './firebase/config.js';
 	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-	import { courses } from './stores/globals.js';
+	import FacultyCategory from './FacultyCategory.svelte';
 
 	export let hasAccount: Function;
 	let isStudent = true;
 	let studentName = '';
 	let studentYear = '';
 	let studentPassword = '';
-	let studentPass2 =""
+	let studentPass2 = '';
 	let studentRegno = '';
+	let studentFaculty = '';
 	let studentCourse = '';
 	let tutorName = '';
 	let tutorFaculty = '';
 	let turorPassword = '';
-	let tutorPass2 =""
+	let tutorPass2 = '';
 
-	function checkPass (){
-		 if ( ( studentPassword != studentPass2  ) || (turorPassword!= turorPassword) ){
-			return "passwords do not match"
-		 }
-	}
-	async function studentSignup() {
-		if (  checkPass() != "passwords do not match") {
-			await addDoc(collection(db, 'users'), {
-			user: 'student',
-			name: studentName.toUpperCase(),
-			year: studentYear.toUpperCase(),
-			password: studentPassword,
-			registrationNo: studentRegno.toUpperCase(),
-			course: studentCourse.toUpperCase(),
-			created: serverTimestamp(),
-			verified: false
-		})
-			.then(() => {
-				alert('signed up ! Welcome to Multimedia');
-			})
-			.catch((e) => {
-				alert('error:' + e);
-			});
-			
-		} else {
-			alert("Error passwords do not match! ") 
+	function checkPass() {
+		if (studentPassword != studentPass2 || turorPassword != turorPassword) {
+			return 'passwords do not match';
 		}
+	}
 
+	async function studentSignup() {
+		if (checkPass() != 'passwords do not match') {
+			await addDoc(collection(db, 'users'), {
+				user: 'student',
+				name: studentName.toUpperCase(),
+				year: studentYear.toUpperCase(),
+				password: studentPassword,
+				registrationNo: studentRegno.toUpperCase(),
+				faculty: studentFaculty.toUpperCase(),
+				course: studentCourse.toUpperCase(),
+
+				created: serverTimestamp(),
+				verified: false
+			})
+				.then(() => {
+					alert('signed up ! Welcome to Multimedia');
+				})
+				.catch((e) => {
+					alert('error:' + e);
+				});
+		} else {
+			alert('Error passwords do not match! ');
+		}
 	}
 	async function tutorSignup() {
-		if ( checkPass() != "passwords do not match"  ) {
+		if (checkPass() != 'passwords do not match') {
 			await addDoc(collection(db, 'users'), {
-			user: 'tutor',
-			name: tutorName.toUpperCase(),
-			faculty: tutorFaculty.toUpperCase(),
-			password: turorPassword
-		})
-			.then(() => {
-				alert('signed up ! Welcome to Multimedia');
+				user: 'tutor',
+				name: tutorName.toUpperCase(),
+				faculty: tutorFaculty.toUpperCase(),
+				password: turorPassword
 			})
-			.catch((e) => {
-				alert('error:' + e);
-			});
-			
+				.then(() => {
+					alert('signed up ! Welcome to Multimedia');
+				})
+				.catch((e) => {
+					alert('error:' + e);
+				});
 		} else {
-			 alert("Password do not match")
+			alert('Password do not match');
 		}
-	
 	}
 </script>
 
@@ -95,9 +95,12 @@
 					class="input input-primary mt-1 "
 					placeholder="password"
 				/>
-				<input bind:value={ studentPass2} type="text" class="input input-primary mt-1 " placeholder="confirm password" />
-				 
-				  
+				<input
+					bind:value={studentPass2}
+					type="text"
+					class="input input-primary mt-1 "
+					placeholder="confirm password"
+				/>
 
 				<br />
 				<input
@@ -109,15 +112,12 @@
 				<br />
 				<section class="course  mx-auto flex flex-col justify-center">
 					<p>PICK YOUR COURSE</p>
-					<select
-						name="courses"
-						bind:value={studentCourse}
-						class=" p-3 rounded-md m-1 text-center max-w-[80vw] mx-auto border-2 border-primary flex flex-col items-center gap-1  cursor-pointer"
-					>
-						{#each $courses as course}
-							<option value={course} class=" w-full  border-2"> {course}</option>
-						{/each}
-					</select>
+					<FacultyCategory
+						on:courseSelected={(e) => {
+							studentFaculty = e.detail.faculty;
+							studentCourse = e.detail.programme;
+						}}
+					/>
 				</section>
 				<button on:click={studentSignup} class="btn btn-primary w-full mt-2">REGISTER</button>
 			</div>
@@ -142,7 +142,12 @@
 					class="input input-primary mt-1 "
 					placeholder="password"
 				/>
-				<input type="text" class="input input-primary mt-1 " placeholder="confirm password" />
+				<input
+					bind:value={tutorPass2}
+					type="text"
+					class="input input-primary mt-1 "
+					placeholder="confirm password"
+				/>
 				<br />
 				<button on:click={tutorSignup} class="btn btn-primary w-full mt-2">REGISTER</button>
 			</div>

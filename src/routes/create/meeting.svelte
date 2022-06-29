@@ -1,7 +1,7 @@
 <script>
 	import { db } from '$lib/firebase/config';
-import { loggedIn } from '$lib/stores/globals';
-	import { addDoc, collection } from 'firebase/firestore';
+import { loggedIn, userDetails } from '$lib/stores/globals';
+	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 	let meetingTitle = '';
 	let meetingLocation = '';
 	let meetingParticipants = '';
@@ -14,7 +14,10 @@ import { loggedIn } from '$lib/stores/globals';
 			location: meetingLocation.toLocaleUpperCase(),
 			participants: meetingParticipants.toUpperCase(),
 			describtion: meetingDescribtion,
-			date: meetingDate
+			date: meetingDate,
+			upvotes : 0 ,
+			 createdBy:  $userDetails,
+			 created : serverTimestamp()
 		})
 			.then(() => {
 				alert('Submitted sucessfully ');

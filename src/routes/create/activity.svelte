@@ -1,7 +1,7 @@
 <script>
 	import { db } from '$lib/firebase/config';
-import { loggedIn } from '$lib/stores/globals';
-	import { addDoc, collection } from 'firebase/firestore';
+import { loggedIn, userDetails } from '$lib/stores/globals';
+	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 	let eventTitle = '';
 	let eventLocation = '';
 	let eventDescribtion = '';
@@ -12,7 +12,11 @@ import { loggedIn } from '$lib/stores/globals';
             title : eventTitle.toUpperCase(),
              location : eventLocation.toUpperCase(),
              describtion : eventDescribtion,
-             date : eventDate
+             date : eventDate,
+			 upvotes : 0 ,
+			 createdBy:  $userDetails,
+			 created : serverTimestamp()
+
         }).then(() => {
 			alert('Submitted sucessfully ');
 		}).catch( e=> alert( e))

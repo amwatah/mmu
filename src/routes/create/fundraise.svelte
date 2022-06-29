@@ -1,12 +1,12 @@
 <script>
 	import { db } from '$lib/firebase/config';
-import { loggedIn } from '$lib/stores/globals';
-	import { addDoc, collection } from 'firebase/firestore';
+import { loggedIn, userDetails } from '$lib/stores/globals';
+	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 	let fundTitle = '';
 	let fundAppeal = '';
 	let fundAmount = '';
 	let fundContacts = '';
-	let fundBilling = ' ';
+	let fundBilling = '';
 
 	async function submitFundraiser() {
 		await addDoc(collection(db, 'fundraisers'), {
@@ -14,7 +14,10 @@ import { loggedIn } from '$lib/stores/globals';
 			appeal: fundAppeal,
 			amount: fundAmount,
 			conctacts: fundContacts,
-			billing: fundBilling
+			billing: fundBilling,
+			upvotes : 0 ,
+			 createdBy:  $userDetails,
+			 created : serverTimestamp()
 		})
 			.then(() => {
 				alert('Submitted sucessfully ');
