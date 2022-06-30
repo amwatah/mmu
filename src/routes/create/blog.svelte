@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">
+	import Cast from '$lib/Cast.svelte';
+
 	import { db } from '$lib/firebase/config';
 	import { loggedIn, userDetails } from '$lib/stores/globals';
 
@@ -6,16 +8,18 @@
 
 	let blogTitle = '';
 	let blogAuthor = '';
-	let blogBody = "";
+	let blogBody = '';
+	let shareTo: any = [];
 
 	async function submitBlog() {
 		await addDoc(collection(db, 'blogs'), {
 			title: blogTitle,
 			author: blogAuthor,
 			body: blogBody,
-			upvotes : 0 ,
-			 createdBy:  $userDetails,
-			 created : serverTimestamp()
+			upvotes: 0,
+			createdBy: $userDetails,
+			created: serverTimestamp(),
+			shareTo: shareTo
 		})
 			.then(() => {
 				alert('blog added sucessfully');
@@ -56,7 +60,7 @@
 			class=" textarea textarea-primary col-span-12 m-2 rounded-none"
 		/>
 
-		
+		<Cast on:coursesSelected={(e) => (shareTo = e.detail)} />
 
 		<button on:click={submitBlog} class="btn  btn-primary col-span-12  m-2 rounded-none "
 			>Submit</button

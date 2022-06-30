@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">
+import Cast from '$lib/Cast.svelte';
+
 	import { db } from '$lib/firebase/config';
 import { loggedIn, userDetails } from '$lib/stores/globals';
 	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
@@ -7,7 +9,7 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
 	let fundAmount = '';
 	let fundContacts = '';
 	let fundBilling = '';
-
+    let shareTo : any[] = []
 	async function submitFundraiser() {
 		await addDoc(collection(db, 'fundraisers'), {
 			title: fundTitle,
@@ -17,7 +19,8 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
 			billing: fundBilling,
 			upvotes : 0 ,
 			 createdBy:  $userDetails,
-			 created : serverTimestamp()
+			 created : serverTimestamp(),
+			 shareTo : shareTo
 		})
 			.then(() => {
 				alert('Submitted sucessfully ');
@@ -69,7 +72,7 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
 	 placeholder="Billing address"
 	 class="input input-primary col-span-6 m-2 rounded-none"
  />
-
+ <Cast on:coursesSelected={ e=> shareTo=e.detail }/>
  <button on:click={submitFundraiser} class="btn  btn-primary col-span-12  m-2 rounded-none "
 	 >Submit</button
  >

@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">
+import Cast from '$lib/Cast.svelte';
+
 	import { db } from '$lib/firebase/config';
 import { loggedIn, userDetails } from '$lib/stores/globals';
 	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
@@ -6,6 +8,7 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
 	let eventLocation = '';
 	let eventDescribtion = '';
 	let eventDate = ' ';
+	let shareTo:any[] = []
 
 	async function submitEvent() {
 		await addDoc(collection(db, "events"), {
@@ -15,7 +18,8 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
              date : eventDate,
 			 upvotes : 0 ,
 			 createdBy:  $userDetails,
-			 created : serverTimestamp()
+			 created : serverTimestamp(),
+			 shareTo : shareTo
 
         }).then(() => {
 			alert('Submitted sucessfully ');
@@ -55,6 +59,7 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
 		name=""
 		id=""
 	/>
+	<Cast on:coursesSelected={ e=> shareTo=e.detail }/>
 	<button  on:click={ submitEvent } class="btn  btn-primary col-span-12  m-2 rounded-none ">Submit</button>
 	{/if}
 

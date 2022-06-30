@@ -4,7 +4,7 @@ import Icon from "@iconify/svelte"
 
 </script>
 
-<section class="nav fixed bottom-0 w-full h-[8vh] text-primary rounded-t-lg flex justify-evenly items-center   ">
+<section class="nav fixed bottom-0 w-full h-[8vh] text-primary rounded-t-lg flex justify-evenly items-center z-50  ">
     <button on:click={ ()=> goto("/home")} class="flex flex-col items-center">
         <Icon icon="ant-design:home-filled" />
         <p class="text-xs ">Home</p>

@@ -1,4 +1,6 @@
-<script>
+<script lang="ts">
+import Cast from '$lib/Cast.svelte';
+
 	import { db } from '$lib/firebase/config';
 import { loggedIn, userDetails } from '$lib/stores/globals';
 	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
@@ -7,6 +9,7 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
 	let meetingParticipants = '';
 	let meetingDescribtion = '';
 	let meetingDate = ' ';
+	let shareTo :any[] = []
 
 	async function submitMeeting() {
 		await addDoc(collection(db, 'meetings'), {
@@ -17,7 +20,8 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
 			date: meetingDate,
 			upvotes : 0 ,
 			 createdBy:  $userDetails,
-			 created : serverTimestamp()
+			 created : serverTimestamp(),
+			 shareTo: shareTo
 		})
 			.then(() => {
 				alert('Submitted sucessfully ');
@@ -26,13 +30,15 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
 	}
 </script>
 
-<div class="page grid grid-cols-12 pt-[5vh]">
+<div class="page grid grid-cols-12 pt-[5vh] pb-[10vh] ">
 	{#if  $loggedIn === false }
 		  <section class='w-screen h-screen flex flex-col items-center justify-center text-error'>
 			   <h1 class= " font-bold text-xl"> LOGGIN TO CREATE  OR VIEW CONTENT !!  </h1>
 			   <a href="/" class=' btn btn-outline btn-primary'>LOG IN </a>
 		  </section>
 	{:else}
+	
+
 	<h1 class=" col-span-12 text-center">New Meetup</h1>
 	<input
 		bind:value={meetingTitle}
@@ -69,6 +75,7 @@ import { loggedIn, userDetails } from '$lib/stores/globals';
 		name=""
 		id=""
 	/>
+	<Cast on:coursesSelected={ e=> shareTo=e.detail }/>
 	<button on:click={submitMeeting} class="btn  btn-primary col-span-12  m-2 rounded-none "
 		>Submit</button
 	>
