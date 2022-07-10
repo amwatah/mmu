@@ -1,22 +1,18 @@
 <script lang="ts">
-	import EventsSection from '$lib/EventsSection.svelte';
-	import MeetingSection from '$lib/MeetingSection.svelte';
-
+	import NewSection from '$lib/NewSection.svelte';
 	import { loggedIn, userDetails } from '$lib/stores/globals';
+	console.log($userDetails);
 </script>
 
-<div class="page pb-[10vh] w-screen">
+<div class="page">
 	{#if $loggedIn}
 		{#if $userDetails?.user === 'student'}
 			<section class="student">
-				<MeetingSection />
-			</section>
-			<section class="student">
-				<EventsSection />
+				<NewSection />
 			</section>
 		{:else}
 			<section class="tutor w-screen h-screen flex flex-col items-center justify-center">
-				<p class="text-error">Tutors can only create content for students</p>
+			      <p class=" text-error">Tutor can only veiw content </p>
 			</section>
 		{/if}
 	{:else}

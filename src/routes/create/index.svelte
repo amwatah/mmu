@@ -4,9 +4,7 @@
 	import Icon from '@iconify/svelte';
 </script>
 
-<div class="create-page grid grid-cols-12 gap-2 pt-[4vh] pb-[10vh] w-full overflow-x-hidden">
-	<p class=" col-span-12 text-center">share new Activity</p>
-
+<div class="create-page grid grid-cols-12 gap-2 pt-[6vh] pb-[10vh] w-full overflow-x-hidden">
 	<section
 		on:click={() => goto('create/announce')}
 		class="col-span-8  rounded-md bg-primary h-[20vh] m-1 flex  flex-col justify-center items-center hover:bg-secondary text-white "

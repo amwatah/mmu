@@ -1,15 +1,12 @@
 <script lang="ts">
 	import Cast from '$lib/Cast.svelte';
-import { db } from '$lib/firebase/config';
+	import { db } from '$lib/firebase/config';
 	import { loggedIn, userDetails } from '$lib/stores/globals';
 	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
-
 	let announcementTitle = '';
 	let announcementDescribion = '';
-	let shareTo :any[] = []
-
-	
+	let shareTo: any[] = [];
 
 	async function submitAnouncement() {
 		await addDoc(collection(db, 'announcements'), {
@@ -18,7 +15,7 @@ import { db } from '$lib/firebase/config';
 			createdBy: $userDetails,
 			upvotes: 0,
 			created: serverTimestamp(),
-			shareTo : shareTo
+			shareTo: shareTo
 		}).then(() => {
 			alert('Submitted sucessfully ');
 		});
@@ -48,12 +45,9 @@ import { db } from '$lib/firebase/config';
 			rows="5"
 			class=" textarea textarea-primary col-span-12 m-2 rounded-none"
 		/>
-		<Cast on:coursesSelected={ e=> shareTo=e.detail }/>
+		<Cast on:coursesSelected={(e) => (shareTo = e.detail)} />
 		<button on:click={submitAnouncement} class="btn  btn-primary col-span-12  m-2 rounded-none "
 			>Submit</button
 		>
-
-	
-
 	{/if}
 </div>

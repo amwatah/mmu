@@ -6,7 +6,7 @@
     const toggleAccount = ()=> activeAccount = !activeAccount
 </script>
 
-<div class=" page flex flex-col items-center text-center">
+<div class=" page flex flex-col items-center text-center pb-[12vh]">
 	<div class="intro-text">
 		<h1 class="text-xl sm:text-4xl">MULTIMEDIA STUDENTS HUB</h1>
 		<h2>The comrades centre</h2>

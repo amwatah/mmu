@@ -4,10 +4,21 @@ type Faculty = {
 	facultyTitle: string;
 	programmes: string[];
 };
-export const loggedIn = writable(false);
-export const userDetails = writable();
-export const faculties = writable<Faculty[]>([
+type userDetails = {
+	course: string;
+	created?: any;
+	faculty: string;
+	name: string;
+	registrationNo: string;
+	verified?: boolean;
+	year: string;
+	password?: string
+	user?:"student"|"tutor"
+};
 
+export const loggedIn = writable(false);
+export const userDetails = writable<userDetails | undefined>();
+export const faculties = writable<Faculty[]>([
 	{
 		facultyTitle: 'Faculty of Science and Technology',
 		programmes: [
@@ -58,8 +69,8 @@ export const faculties = writable<Faculty[]>([
 			'BACHELOR OF SCIENCE IN SOFTWARE ENGINEERING'
 		]
 	},
-    {
+	{
 		facultyTitle: 'Faculty of Social Sciences and Technology',
 		programmes: ['BACHELOR OF ARTS (PSYCHOLOGY, SOCIOLOGY & POLITICAL SCIENCE)']
-	},
+	}
 ]);

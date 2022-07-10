@@ -2,6 +2,8 @@
 	import { db } from './firebase/config.js';
 	import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 	import FacultyCategory from './FacultyCategory.svelte';
+import Cast from './Cast.svelte';
+import Icon from '@iconify/svelte';
 
 	export let hasAccount: Function;
 	let isStudent = true;
@@ -13,7 +15,7 @@
 	let studentFaculty = '';
 	let studentCourse = '';
 	let tutorName = '';
-	let tutorFaculty = '';
+	let tutorFaculty:any[]= []
 	let turorPassword = '';
 	let tutorPass2 = '';
 
@@ -52,8 +54,10 @@
 			await addDoc(collection(db, 'users'), {
 				user: 'tutor',
 				name: tutorName.toUpperCase(),
-				faculty: tutorFaculty.toUpperCase(),
-				password: turorPassword
+				faculty :tutorFaculty,
+				password: turorPassword,
+				verified :false,
+				created : serverTimestamp()
 			})
 				.then(() => {
 					alert('signed up ! Welcome to Multimedia');
@@ -67,7 +71,7 @@
 	}
 </script>
 
-<div class="flex flex-col items-center ">
+<div class="flex flex-col items-center pb-[10vh] ">
 	<div class="switch flex gap-2">
 		<p class="">STUDENT</p>
 		<input on:change={() => (isStudent = !isStudent)} type="checkbox" class="toggle" />
@@ -122,19 +126,15 @@
 				<button on:click={studentSignup} class="btn btn-primary w-full mt-2">REGISTER</button>
 			</div>
 		{:else}
-			<div class="tutor-form">
+			<div class="tutor-form ">
 				<input
 					bind:value={tutorName}
 					type="text"
-					class="input input-primary mt-1 "
+					class="input input-primary mt-1  w-full "
 					placeholder="Username"
 				/>
 				<input
-					bind:value={tutorFaculty}
-					type="text"
-					class="input input-primary mt-1 "
-					placeholder="Main Faculty"
-				/>
+			/>
 				<br />
 				<input
 					bind:value={turorPassword}
@@ -148,13 +148,14 @@
 					class="input input-primary mt-1 "
 					placeholder="confirm password"
 				/>
+				<Cast on:coursesSelected={e=> tutorFaculty= e.detail} />
 				<br />
 				<button on:click={tutorSignup} class="btn btn-primary w-full mt-2">REGISTER</button>
 			</div>
 		{/if}
-		<button on:click={() => hasAccount()} class="btn btn-outline btn-primary btn-sm mt-1"
-			>login</button
-		>
+	    <button  on:click={ ()=> hasAccount() } class="login fixed top-0 left-0 z-50 text-3xl text-accent animate-bounce m-3">
+			<Icon icon="ic:baseline-login"   class=" " />
+		</button>
 	</div>
 
 	<br />

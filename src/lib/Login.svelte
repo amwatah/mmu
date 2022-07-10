@@ -24,7 +24,7 @@
 				snapShot.forEach(  (doc)=>{
 					userDetails.set( doc.data())
 				})
-				goto('home');
+				goto('/create');
 				alert("Welcome to MMU  hub")
 				loggedIn.set(true)
 				
