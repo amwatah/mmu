@@ -37,25 +37,25 @@
 
 <div class="meeting">
 	{#each meetings as meeting}
-		<section class="meeting  border-2 p-2 m-2 border-primary rounded-md shadow-lg">
-			<p class="title uppercase font-bold shadow-2xl">{meeting.title}</p>
-			<p class="attendants uppercase  border-2 border-primary p-2 rounded-md mb-1">
-				<span class=" font-bold">ATTENDANTS </span>: {meeting.participants}
+		<section class="meeting glass bg-primary text-white  hover:bg-primary border-4  p-2 m-2 border-primary rounded-lg  ">
+			<p class="title uppercase font-bold shadow-2xl text-center">{meeting.title}</p>
+			<p class="attendants uppercase   rounded-md mb-1 text-center font-bold">
+				<span class=" font-bold ">ATTENDANTS </span>: {meeting.participants}
 			</p>
-			<p class="describtion border-2 p-2 border-primary rounded-md shadow-lg">
+			<p class="describtion  rounded-md border-y-2 p-2 italic ">
 				{meeting.describtion}
 			</p>
 			<div class="date-location flex justify-evenly">
 				<p class="date">DATE: {meeting.date}</p>
 				<p class="location">LOCATION :{meeting.location}</p>
 			</div>
-			<div class="details  flex justify-evenly border-2 border-accent p-2 ">
+			<div class="details  flex justify-evenly  p-2 ">
 				<span> {meeting.createdBy.registrationNo}</span>
 				<span> {meeting.createdBy.name}</span>
 			</div>
 
 			<div class="likes flex  justify-center p-2">
-				<button on:click={() => addLike(meeting)}>
+				<button on:click={() => addLike(meeting)} class=" hover:animate-bounce">
 					<Icon icon="ant-design:like-filled" />
 					<span>{meeting.upvotes}</span>
 				</button>

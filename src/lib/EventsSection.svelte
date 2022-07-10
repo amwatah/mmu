@@ -38,23 +38,23 @@
 
 <div class="meeting">
 	{#each events as meeting}
-		<section class="meeting  border-2 p-2 m-2 border-primary rounded-md shadow-lg">
-			<p class="title uppercase font-bold shadow-2xl">{meeting.title}</p>
+		<section class="meeting   border-4 p-2 m-2 glass bg-primary text-white hover:bg-primary rounded-md shadow-lg">
+			<p class="title uppercase font-bold shadow-2x. text-center">{meeting.title}</p>
 
-			<p class="describtion border-2 p-2 border-primary rounded-md shadow-lg">
+			<p class="describtion border-y-2 p-2 rounded-md shadow-lg">
 				{meeting.describtion}
 			</p>
-			<div class="date-location flex flex-col justify-evenly">
+			<div class="date-location flex  items-center justify-evenly">
 				<p class="date  ">DATE: {meeting.date}</p>
-				<p class="location border-2 border-primary p-2 rounded-md m-1">LOCATION :{meeting.location}</p>
+				<p class="location p-2 rounded-md m-1">LOCATION :{meeting.location}</p>
 			</div>
-			<div class="details  flex justify-evenly border-2 border-accent p-2 ">
+			<div class="details  flex justify-evenly  p-2 ">
 				<span class=""> {meeting.createdBy.registrationNo}</span>
 				<span> {meeting.createdBy.name}</span>
 			</div>
 
 			<div class="likes flex  justify-center p-2">
-				<button on:click={() => addLike(meeting)}>
+				<button on:click={() => addLike(meeting)} class=" focus-within:animate-pulse">
 					<Icon icon="ant-design:like-filled" />
 					<span>{meeting.upvotes}</span>
 				</button>
