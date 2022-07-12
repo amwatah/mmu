@@ -53,7 +53,7 @@ import FundCard from './FundCard.svelte';
 
 			</div>
 		</section>
-		<section class="news flex-[3] ">
+		<section class="news flex-[3] overflow-y-scroll ">
 			 {#each  annoucements  as announcement }
 				  <section class="announcement">
 					   <NewsCard announcement={ announcement}/>

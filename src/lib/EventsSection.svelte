@@ -38,7 +38,7 @@
 
 <div class="meeting">
 	{#each events as meeting}
-		<section class="meeting   border-4 p-2 m-2 glass bg-primary text-white hover:bg-primary rounded-md shadow-lg">
+		<section class="meeting   border-4 p-2 m-2 glass bg-primary text-white hover:bg-primary rounded-md shadow-lg pb-[10vh]">
 			<p class="title uppercase font-bold shadow-2x. text-center">{meeting.title}</p>
 
 			<p class="describtion border-y-2 p-2 rounded-md shadow-lg">

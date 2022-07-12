@@ -5,7 +5,7 @@
 	import { loggedIn, userDetails } from '$lib/stores/globals';
 </script>
 
-<div class="page pb-[10vh] w-screen">
+<div class="page pb-[10vh] w-screen min-h-screen ">
 	{#if $loggedIn}
 		{#if $userDetails?.user === 'student'}
 			<section class="student">
