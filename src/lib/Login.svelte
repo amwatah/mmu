@@ -10,13 +10,13 @@
 	type LoginState = 'valid' | 'notLogged' | 'invalid';
 	let currentLoginState: LoginState = 'notLogged';
 
-	async function login() {
+	 function login() {
 		const queryRef = query(
 			collection(db, 'users'),
 			where('name', '==', userName.toUpperCase()),
 			where('password', '==', password.toString())
 		);
-		await getDocs(queryRef).then((snapShot) => {
+		 getDocs(queryRef).then((snapShot) => {
 			if (snapShot.empty) {
 				currentLoginState = 'invalid';
 			} else {
@@ -36,7 +36,7 @@
 <div class="">
 	<input
 		bind:value={userName}
-		type="tel"
+	     type="text"
 		class="input input-primary mt-1 "
 		placeholder="Username"
 	/>
