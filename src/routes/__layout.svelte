@@ -14,7 +14,7 @@
 
 <div
 	data-theme={activeTheme}
-	class="page w-screen min-h-screen overflow-x-hidden   scroll scroll-smooth"
+	class="page w-screen min-h-screen overflow-x-hidden   scroll scroll-smooth pb-[10vh]"
 >
 	<Theme swapTheme={toggleTheme} />
 	<slot />
